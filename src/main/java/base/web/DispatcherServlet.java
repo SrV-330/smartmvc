@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+
+import base.common.HandlerMapping;
 @WebServlet(name="dispatcherServlet",
 			urlPatterns = {"*.do"},
 			loadOnStartup = 1)
@@ -24,7 +26,7 @@ public class DispatcherServlet extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
+	private HandlerMapping handlerMapping;
 	
 	
 	@Override
@@ -51,6 +53,9 @@ public class DispatcherServlet extends HttpServlet{
 				
 			}
 			System.out.println("beans: "+beans);
+			
+			handlerMapping=new HandlerMapping();
+			handlerMapping.process(beans);
 			
 			
 		} catch (Exception e) {
