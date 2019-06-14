@@ -11,4 +11,11 @@ public class HelloController {
 		return "hello";
 	}
 
+	@Override
+	public String toString() {
+		return "HelloController []";
+	}
+
+	
+	
 }
