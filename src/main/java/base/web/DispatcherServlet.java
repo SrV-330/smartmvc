@@ -2,6 +2,7 @@ package base.web;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import base.common.Handler;
 import base.common.HandlerMapping;
 @WebServlet(name="dispatcherServlet",
 			urlPatterns = {"*.do"},
@@ -72,7 +74,22 @@ public class DispatcherServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		
+		String path=req.getRequestURI();
+		System.out.println(req.getRequestURI());
+		System.out.println(req.getRequestURL().toString());
+		path=path.substring(path.lastIndexOf("/"));
+		Handler handler = handlerMapping.getHandler(path);
+		try {
+			if(handler!=null) {
+				String jspPath=handler.getMethod().invoke(handler.getObject()).toString();
+				System.out.println(jspPath);
+				req.getRequestDispatcher("/WEB-INF/"+jspPath+".jsp").forward(req, resp);
+				
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		} 
 		
 		
 	}

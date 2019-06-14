@@ -2,7 +2,7 @@ package controller;
 
 import base.common.RequestMapping;
 
-public class HelloController {
+public class HelloController extends Controller{
 	
 	@RequestMapping("/hello")
 	public String hello() {
@@ -11,11 +11,7 @@ public class HelloController {
 		return "hello";
 	}
 
-	@Override
-	public String toString() {
-		return "HelloController []";
-	}
-
+	
 	
 	
 }

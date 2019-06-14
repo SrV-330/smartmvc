@@ -6,6 +6,13 @@ public class Handler {
 	
 	private Method method;
 	private Object object;
+	
+	
+	public Handler( Object object,Method method) {
+		super();
+		this.method = method;
+		this.object = object;
+	}
 	public Method getMethod() {
 		return method;
 	}
@@ -18,6 +25,12 @@ public class Handler {
 	public void setObject(Object object) {
 		this.object = object;
 	}
+	@Override
+	public String toString() {
+		return "Handler [method=" + method + ", object=" + object + "]";
+	}
 	
 
+	
+	
 }
