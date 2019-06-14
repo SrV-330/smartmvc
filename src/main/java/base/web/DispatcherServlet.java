@@ -1,15 +1,22 @@
 package base.web;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebServlet(name = "dispatcherServlet",
-			urlPatterns = {"*.do"})
+
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+@WebServlet(name="dispatcherServlet",
+			urlPatterns = {"*.do"},
+			loadOnStartup = 1)
 public class DispatcherServlet extends HttpServlet{
 
 	/**
@@ -21,8 +28,35 @@ public class DispatcherServlet extends HttpServlet{
 	
 	
 	@Override
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		
+		SAXReader reader=new SAXReader();
+		InputStream in=getClass()
+				.getClassLoader()
+				.getResourceAsStream("smartmvc.xml");
+		List<Object> beans = new ArrayList<Object>();
+		
+		try {
+			
+			Document doc = reader.read(in);
+			Element root = doc.getRootElement();
+			@SuppressWarnings("unchecked")
+			List<Element> eles = root.elements();
+			for(Element ele:eles) {
+				
+				String className = ele.attributeValue("class");
+				System.out.println("ClassName: "+className);
+				Object bean = Class.forName(className).newInstance();
+				beans.add(bean);
+				
+			}
+			System.out.println("beans: "+beans);
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 		
 		
 	}
