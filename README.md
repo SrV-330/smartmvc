@@ -29,7 +29,14 @@
 			<bean class="controller.HelloController">	
 			</bean>
 		</beans>
-4. 创建controller包,在包中创建类HelloController并在其上添加@RequestMapping注解,在注解内配置url,例如@RequestMapping("/hello.do")
+4. 在WEB-INF下编写hello.jsp
+
+
+5. 创建controller包,
+	在包中创建类HelloController(通过继承Controller类来免重写toString()方法),
+	编写hello方法(返回值为hello对应hello.jsp),并在其上添加@RequestMapping注解,在注解内配置url,
+	例如@RequestMapping("/hello.do")
+
 		package controller;
 
 		import base.common.RequestMapping;
