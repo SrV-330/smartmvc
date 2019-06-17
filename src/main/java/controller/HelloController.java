@@ -4,7 +4,7 @@ import base.common.RequestMapping;
 
 public class HelloController extends Controller{
 	
-	@RequestMapping("/hello")
+	@RequestMapping("/hello.do")
 	public String hello() {
 		System.out.println(this.getClass().getSimpleName()+": hello");
 		

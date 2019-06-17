@@ -75,15 +75,23 @@ public class DispatcherServlet extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String path=req.getRequestURI();
+		String contextPath=req.getContextPath();
 		System.out.println(req.getRequestURI());
 		System.out.println(req.getRequestURL().toString());
 		path=path.substring(path.lastIndexOf("/"));
+		System.out.println("path: "+path);
+		
 		Handler handler = handlerMapping.getHandler(path);
 		try {
 			if(handler!=null) {
-				String jspPath=handler.getMethod().invoke(handler.getObject()).toString();
-				System.out.println(jspPath);
-				req.getRequestDispatcher("/WEB-INF/"+jspPath+".jsp").forward(req, resp);
+				String view=handler.getMethod().invoke(handler.getObject()).toString();
+				System.out.println("view: "+view);
+				if(view.startsWith("redirect:")) {
+					view=view.substring("redirect:".length());
+					resp.sendRedirect(contextPath+"/"+view);
+				}else {
+					req.getRequestDispatcher("/WEB-INF/"+view+".jsp").forward(req, resp);
+				}
 				
 			}
 		} catch (Exception e) {
