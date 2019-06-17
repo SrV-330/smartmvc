@@ -20,9 +20,7 @@ import org.dom4j.io.SAXReader;
 
 import base.common.Handler;
 import base.common.HandlerMapping;
-@WebServlet(name="dispatcherServlet",
-			urlPatterns = {"*.do"},
-			loadOnStartup = 1)
+
 public class DispatcherServlet extends HttpServlet{
 
 	/**
