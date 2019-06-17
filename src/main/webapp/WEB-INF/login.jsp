@@ -12,6 +12,8 @@
 		<legend>login</legend>
 		username: <input name="username" type="text"><br>
 		password: <input name="password" type="password"><br>
+		<span>${requestScope.err_msg }</span><br>
+		
 		<input type="submit" value="submit">
 	</fieldset>
 	
